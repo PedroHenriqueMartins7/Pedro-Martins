@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Martins OS · Presença digital que vende</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none'%3E%3Crect width='100' height='100' rx='26' fill='%230D0D0D'/%3E%3Crect x='22' y='54' width='16' height='27' rx='4' fill='%23F5C400' opacity='0.35'/%3E%3Crect x='42' y='37' width='16' height='44' rx='4' fill='%23F5C400' opacity='0.7'/%3E%3Crect x='62' y='19' width='16' height='62' rx='4' fill='%23F5C400'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark-green: #111111;
+      --lime: #F5C400;
+      --success-pill: #FEF3C7;
+      --white: #FFFFFF;
+      --off-white: #FAFAF7;
+      --beige: #EBE8D8;
+      --border: #E8E8E5;
+      --text: #0A0A0A;
+      --muted: #6B6B6B;
+      --text-dark: #FFFFFF;
+      --text-dark-muted: rgba(255,255,255,0.65);
+      --success-pill: #FEF3C7;
+      --radius-pill: 9999px;
+      --radius-card: 24px;
+      --radius-card-lg: 32px;
+      --shadow-float: 0 8px 24px -8px rgba(0,0,0,0.12), 0 2px 6px -2px rgba(0,0,0,0.06);
+      --shadow-elevated: 0 20px 50px -20px rgba(0,0,0,0.20), 0 8px 16px -8px rgba(0,0,0,0.08);
+      --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .serif { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      padding: 16px 0;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s var(--ease-out);
+    }
+    nav.scrolled { border-bottom-color: var(--border); }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-word {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      transition: opacity 0.15s;
+    }
+    .nav-links a:hover { opacity: 0.55; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav-enter {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .nav-enter:hover { opacity: 0.55; }
+    .btn-pill-dark {
+      background: var(--dark-green);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+    }
+    .btn-pill-dark:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px -4px rgba(0,0,0,0.35);
+    }
+    .btn-pill-lime {
+      background: var(--lime);
+      color: var(--text);
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background 0.15s;
+    }
+    .btn-pill-lime:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px -4px rgba(245,196,0,0.45);
+      background: #FFD000;
+    }
+
+    /* ── SECTION BASE ── */
+    .section { padding: 128px 0; }
+    .section-sm { padding: 80px 0; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--success-pill);
+      color: var(--dark-green);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--dark-green);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 0 128px;
+      background: var(--white);
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-content { display: flex; flex-direction: column; gap: 32px; }
+    .hero-h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--muted);
+      max-width: 480px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .hero-checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+      margin-top: 8px;
+    }
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .check-icon {
+      width: 24px; height: 24px;
+      background: var(--lime);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .check-icon svg { width: 12px; height: 12px; stroke: var(--text); stroke-width: 2.5; }
+    .check-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+    }
+    .hero-device {
+      width: 100%;
+      max-width: 440px;
+      background: var(--dark-green);
+      border-radius: var(--radius-card-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+    }
+    .device-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .device-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .device-bar {
+      flex: 1;
+      height: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+    }
+    .device-metric {
+      padding: 20px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      margin-bottom: 12px;
+    }
+    .device-metric-label {
+      font-size: 13px;
+      color: var(--text-dark-muted);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .device-metric-val {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+    }
+    .device-metric-sub {
+      font-size: 13px;
+      color: var(--text-dark-muted);
+      margin-top: 4px;
+    }
+    .device-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .device-mini {
+      padding: 16px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+    }
+    .device-mini-label {
+      font-size: 12px;
+      color: var(--text-dark-muted);
+      margin-bottom: 4px;
+    }
+    .device-mini-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .device-bar-chart {
+      margin-top: 12px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 48px;
+    }
+    .bar-item {
+      flex: 1;
+      background: rgba(245,196,0,0.25);
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .bar-item.active { background: var(--lime); }
+
+    /* Floating notification cards */
+    .float-card {
+      position: absolute;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      animation: float 4s ease-in-out infinite;
+    }
+    .float-card:nth-child(2) { animation-delay: -2s; animation-duration: 5s; }
+    .float-card-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .float-card-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .float-card-val { font-size: 15px; color: var(--text); font-weight: 700; margin-top: 2px; }
+    .float-1 { top: -20px; right: -32px; }
+    .float-2 { bottom: -16px; left: -28px; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* ── SERVICES — SECTION 2 (WHITE) ── */
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-badge { margin-bottom: 20px; }
+    .section-h2 {
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .section-sub {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 16px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── TABS ── */
+    .tab-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+    }
+    .tab-btn:hover { border-color: var(--lime); color: var(--text); }
+    .tab-btn.active {
+      background: var(--dark-green);
+      border-color: var(--dark-green);
+      color: var(--white);
+    }
+    .tab-btn svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+
+    .tab-panels {
+      display: grid;
+      grid-template-areas: "stack";
+    }
+    .tab-panel {
+      grid-area: stack;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      visibility: hidden;
+    }
+    .tab-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .panel-content { display: flex; flex-direction: column; gap: 24px; }
+    .panel-icon-wrap {
+      width: 56px; height: 56px;
+      background: var(--success-pill);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .panel-icon-wrap svg { width: 24px; height: 24px; stroke: var(--dark-green); stroke-width: 2; }
+    .panel-h3 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+    .panel-body {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .panel-checks { display: flex; flex-direction: column; gap: 12px; }
+    .panel-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .panel-check-dot {
+      width: 20px; height: 20px;
+      background: var(--lime);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .panel-check-dot svg { width: 10px; height: 10px; stroke: var(--text); stroke-width: 3; }
+
+    /* Panel visual box */
+    .panel-visual {
+      background: var(--dark-green);
+      border-radius: var(--radius-card-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-elevated);
+    }
+    .panel-visual-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    .panel-metric-big {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--lime);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .panel-metric-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 6px;
+      margin-bottom: 24px;
+    }
+
+    /* CRM kanban */
+    .crm-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .crm-col-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .crm-card {
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+    .crm-card-name { font-size: 13px; font-weight: 600; color: var(--white); }
+    .crm-card-tag {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 500;
+    }
+    .tag-lead { background: rgba(245,196,0,0.2); color: var(--lime); }
+    .tag-proposta { background: rgba(99,179,237,0.2); color: #63B3ED; }
+    .tag-fechado { background: rgba(72,199,142,0.2); color: #48C78E; }
+
+    /* Generic panel mini bars */
+    .panel-bars { display: flex; gap: 6px; align-items: flex-end; height: 56px; margin-top: 20px; }
+    .panel-bar { flex: 1; background: rgba(245,196,0,0.2); border-radius: 4px; }
+    .panel-bar.hi { background: var(--lime); }
+
+    /* ── SECTION 3 — DARK GREEN ── */
+    .section-dark {
+      background: var(--dark-green);
+      padding: 128px 0;
+    }
+    .section-dark .section-h2 { color: var(--white); }
+    .section-dark .section-sub { color: var(--text-dark-muted); }
+    .section-dark .badge {
+      background: rgba(245,196,0,0.15);
+      color: var(--lime);
+    }
+    .section-dark .badge-dot { background: var(--lime); }
+
+    /* How it works steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(16.67% + 24px);
+      right: calc(16.67% + 24px);
+      height: 1px;
+      background: rgba(245,196,0,0.2);
+      z-index: 0;
+    }
+    .step {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,196,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--lime);
+      background: var(--dark-green);
+      position: relative;
+      z-index: 2;
+    }
+    .step-h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .step-body {
+      font-size: 15px;
+      color: var(--text-dark-muted);
+      line-height: 1.6;
+    }
+
+    /* ── SECTION 5 — DARK GREEN (CTA) ── */
+    .cta-wrap {
+      background: var(--off-white);
+      border-radius: var(--radius-card-lg);
+      padding: 80px 64px;
+      text-align: center;
+      box-shadow: var(--shadow-elevated);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .cta-h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+    .cta-sub {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 16px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+    }
+    .testimonial-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-float);
+    }
+    .testimonial-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .star { color: var(--lime); font-size: 16px; }
+    .testimonial-text {
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .author-avatar {
+      width: 40px; height: 40px;
+      background: var(--success-pill);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dark-green);
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .author-role {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      padding: 64px 0 40px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      gap: 48px;
+    }
+    .footer-brand { max-width: 320px; }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      margin-bottom: 16px;
+    }
+    .footer-logo-mark {
+      width: 36px; height: 36px;
+      background: var(--lime);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .footer-logo-word {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .footer-tagline {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+    .footer-nav { display: flex; gap: 64px; }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: 15px;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: 14px;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-tagline-right {
+      font-size: 14px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 12px;
+      transition: background 0.15s;
+    }
+    .mobile-menu a:hover { background: var(--off-white); }
+    .mobile-menu .mobile-cta {
+      margin-top: 8px;
+      background: var(--lime);
+      color: var(--text);
+      font-weight: 600;
+      text-align: center;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-enter { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .hero-visual { min-height: 340px; }
+      .hero-checks { grid-template-columns: 1fr; }
+      .tab-panel { grid-template-columns: 1fr; }
+      .tab-panel.active { grid-template-columns: 1fr; display: grid; }
+      .crm-cols { grid-template-columns: 1fr; }
+      .steps-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .footer-top { flex-direction: column; }
+      .footer-nav { flex-wrap: wrap; gap: 32px; }
+      .container, .nav-inner, .footer-inner {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .hero-inner { padding: 0 20px; }
+      .section { padding: 80px 0; }
+      .section-dark { padding: 80px 0; }
+      .cta-wrap { padding: 48px 24px; }
+      .float-1, .float-2 { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+            <rect width="100" height="100" rx="26" fill="#0D0D0D"/>
+            <rect x="22" y="54" width="16" height="27" rx="4" fill="#F5C400" opacity="0.35"/>
+            <rect x="42" y="37" width="16" height="44" rx="4" fill="#F5C400" opacity="0.7"/>
+            <rect x="62" y="19" width="16" height="62" rx="4" fill="#F5C400"/>
+          </svg>
+        <span class="nav-logo-word">Martins OS</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#contato" class="nav-enter">Ver proposta</a>
+        <a href="https://wa.me/5514998120592" class="btn-pill-dark" target="_blank">
+          Falar comigo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#servicos" class="mobile-link">Serviços</a>
+    <a href="#como-funciona" class="mobile-link">Como funciona</a>
+    <a href="#depoimentos" class="mobile-link">Depoimentos</a>
+    <a href="https://wa.me/5514998120592" class="mobile-cta" target="_blank">Falar no WhatsApp</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <div>
+          <span class="badge fade-up">
+            <span class="badge-dot"></span>
+            Disponível para novos clientes
+          </span>
+        </div>
+        <h1 class="hero-h1 fade-up">
+          Presença digital que<br>
+          realmente <span class="serif" style="color:#F5C400;">vende</span>
+        </h1>
+        <p class="hero-sub fade-up">
+          Enquanto você atende, eu faço seu negócio aparecer e atrair clientes todos os dias.
+        </p>
+        <div class="hero-actions fade-up">
+          <a href="https://wa.me/5514998120592" class="btn-pill-lime" target="_blank">
+            Quero uma proposta
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </a>
+          <a href="#servicos" class="btn-pill-dark">Ver serviços</a>
+        </div>
+        <div class="hero-checks fade-up">
+          <div class="check-row">
+            <div class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="check-text">Site & Landing Page</span>
+          </div>
+          <div class="check-row">
+            <div class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="check-text">Google Meu Negócio</span>
+          </div>
+          <div class="check-row">
+            <div class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="check-text">Tráfego Pago</span>
+          </div>
+          <div class="check-row">
+            <div class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="check-text">Carrosséis & Redes</span>
+          </div>
+          <div class="check-row">
+            <div class="check-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="check-text">Automação & IA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="hero-visual">
+        <!-- Floating cards -->
+        <div class="float-card float-1">
+          <div class="float-card-icon" style="background:#FEF3C7;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+          </div>
+          <div>
+            <div class="float-card-label">Visitas ao site</div>
+            <div class="float-card-val">+340% este mês</div>
+          </div>
+        </div>
+
+        <div class="float-card float-2">
+          <div class="float-card-icon" style="background:#FEF3C7;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 9.8a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="float-card-label">Novo cliente fechado</div>
+            <div class="float-card-val">R$ 1.400 · Clínica Estética</div>
+          </div>
+        </div>
+
+        <!-- Central card -->
+        <div class="hero-device">
+          <div class="device-header">
+            <div class="device-dot" style="background:#F5C400;"></div>
+            <div class="device-dot" style="background:rgba(255,255,255,0.3);"></div>
+            <div class="device-dot" style="background:rgba(255,255,255,0.3);"></div>
+            <div class="device-bar"></div>
+          </div>
+          <div class="device-metric">
+            <div class="device-metric-label">Receita gerada (últimos 30 dias)</div>
+            <div class="device-metric-val">R$ 18.400</div>
+            <div class="device-metric-sub">+27% vs mês anterior</div>
+          </div>
+          <div class="device-row">
+            <div class="device-mini">
+              <div class="device-mini-label">Novos clientes</div>
+              <div class="device-mini-val">12</div>
+            </div>
+            <div class="device-mini">
+              <div class="device-mini-label">Taxa de conversão</div>
+              <div class="device-mini-val">8,4%</div>
+            </div>
+          </div>
+          <div class="device-bar-chart">
+            <div class="bar-item" style="height:40%;"></div>
+            <div class="bar-item" style="height:55%;"></div>
+            <div class="bar-item" style="height:35%;"></div>
+            <div class="bar-item" style="height:70%;"></div>
+            <div class="bar-item" style="height:60%;"></div>
+            <div class="bar-item active" style="height:85%;"></div>
+            <div class="bar-item active" style="height:100%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SECTION 2 — SERVIÇOS (WHITE) -->
+  <section class="section" id="servicos">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">
+          <span class="badge"><span class="badge-dot"></span>O que eu entrego</span>
+        </div>
+        <h2 class="section-h2 fade-up">Tudo que seu negócio precisa<br>pra aparecer e <span class="serif" style="color:#F5C400;">vender</span></h2>
+        <p class="section-sub fade-up">Clique em qualquer serviço para saber mais.</p>
+      </div>
+
+      <!-- TAB BUTTONS -->
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="sites">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Sites & Landing Pages
+        </button>
+        <button class="tab-btn" data-tab="carrossel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Carrosséis
+        </button>
+        <button class="tab-btn" data-tab="redes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Gestão de Redes
+        </button>
+        <button class="tab-btn" data-tab="trafego">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Tráfego Pago
+        </button>
+        <button class="tab-btn" data-tab="gmb">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Google Meu Negócio
+        </button>
+        <button class="tab-btn" data-tab="ia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Automação & IA
+        </button>
+        <button class="tab-btn" data-tab="crm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          CRM
+        </button>
+      </div>
+
+      <!-- TAB PANELS -->
+      <div class="tab-panels">
+
+        <!-- SITES -->
+        <div class="tab-panel active" id="tab-sites">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3 class="panel-h3">Criação de Sites e<br>Landing Pages</h3>
+            <p class="panel-body">Sites modernos, rápidos e responsivos — e landing pages focadas em conversão para transformar visitantes em clientes.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Entregue em até 7 dias</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Design focado em conversão</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Funciona em qualquer dispositivo</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20um%20site" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Quero meu site <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Visitas ao site</div>
+            <div class="panel-metric-big">+340%</div>
+            <div class="panel-metric-sub">crescimento em 30 dias após o lançamento</div>
+            <div class="panel-bars">
+              <div class="panel-bar" style="height:30%"></div>
+              <div class="panel-bar" style="height:45%"></div>
+              <div class="panel-bar" style="height:35%"></div>
+              <div class="panel-bar" style="height:60%"></div>
+              <div class="panel-bar" style="height:55%"></div>
+              <div class="panel-bar hi" style="height:80%"></div>
+              <div class="panel-bar hi" style="height:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARROSSEL -->
+        <div class="tab-panel" id="tab-carrossel">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <h3 class="panel-h3">Carrosséis para<br>Redes Sociais</h3>
+            <p class="panel-body">Carrosséis para Instagram com design atraente que geram engajamento e posicionam sua marca como referência no mercado.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Design de agência, preço de freelancer</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Legendas e copy inclusos</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Pronto para publicar</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20carross%C3%A9is" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Quero carrosséis <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Engajamento médio</div>
+            <div class="panel-metric-big">4,8×</div>
+            <div class="panel-metric-sub">mais alcance vs. posts normais</div>
+            <div class="panel-bars" style="margin-top:24px;">
+              <div class="panel-bar" style="height:25%"></div>
+              <div class="panel-bar" style="height:40%"></div>
+              <div class="panel-bar hi" style="height:70%"></div>
+              <div class="panel-bar hi" style="height:90%"></div>
+              <div class="panel-bar hi" style="height:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REDES SOCIAIS -->
+        <div class="tab-panel" id="tab-redes">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <h3 class="panel-h3">Gestão de<br>Redes Sociais</h3>
+            <p class="panel-body">Cuido do seu Instagram, Facebook e LinkedIn do início ao fim — feed, stories, legenda e frequência de postagem.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Planejamento mensal de conteúdo</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Feed, stories e legendas</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Relatório mensal de desempenho</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20gest%C3%A3o%20de%20redes" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Quero gestão <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Seguidores orgânicos</div>
+            <div class="panel-metric-big">+1.200</div>
+            <div class="panel-metric-sub">novos seguidores em 60 dias</div>
+            <div class="panel-bars" style="margin-top:24px;">
+              <div class="panel-bar" style="height:20%"></div>
+              <div class="panel-bar" style="height:35%"></div>
+              <div class="panel-bar" style="height:50%"></div>
+              <div class="panel-bar hi" style="height:75%"></div>
+              <div class="panel-bar hi" style="height:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRÁFEGO PAGO -->
+        <div class="tab-panel" id="tab-trafego">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h3 class="panel-h3">Tráfego Pago<br>Google & Meta</h3>
+            <p class="panel-body">Google Ads e Meta Ads — campanhas no Google e Instagram/Facebook para atrair clientes prontos para comprar o que você vende.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Configuração e gerenciamento completo</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Acompanhamento semanal</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Relatório com números reais de retorno</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20tr%C3%A1fego%20pago" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Quero mais clientes <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Retorno sobre investimento</div>
+            <div class="panel-metric-big">3,2×</div>
+            <div class="panel-metric-sub">R$ 1 investido retorna R$ 3,20 em vendas</div>
+            <div class="panel-bars" style="margin-top:24px;">
+              <div class="panel-bar" style="height:40%"></div>
+              <div class="panel-bar" style="height:55%"></div>
+              <div class="panel-bar hi" style="height:80%"></div>
+              <div class="panel-bar hi" style="height:100%"></div>
+              <div class="panel-bar hi" style="height:90%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GOOGLE MEU NEGÓCIO -->
+        <div class="tab-panel" id="tab-gmb">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3 class="panel-h3">Google<br>Meu Negócio</h3>
+            <p class="panel-body">Otimizo seu perfil no Google para que clientes te encontrem quando procuram o que você vende — no Maps e na busca orgânica.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Perfil 100% preenchido e otimizado</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Fotos, horários e categorias corretas</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Estratégia de avaliações</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20Google%20Meu%20Neg%C3%B3cio" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Aparecer no Maps <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Buscas locais mensais</div>
+            <div class="panel-metric-big">+580</div>
+            <div class="panel-metric-sub">visualizações no Google Maps após otimização</div>
+            <div class="panel-bars" style="margin-top:24px;">
+              <div class="panel-bar" style="height:20%"></div>
+              <div class="panel-bar" style="height:30%"></div>
+              <div class="panel-bar" style="height:45%"></div>
+              <div class="panel-bar hi" style="height:80%"></div>
+              <div class="panel-bar hi" style="height:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AUTOMAÇÃO & IA -->
+        <div class="tab-panel" id="tab-ia">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <h3 class="panel-h3">Automação<br>& Implementação</h3>
+            <p class="panel-body">Integro automações no seu negócio — atendimento, chatbots, geração de conteúdo e processos mais inteligentes para você vender mais gastando menos tempo.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Respostas automáticas no WhatsApp</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Chatbot para captação de leads</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Geração de conteúdo automatizada</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20automa%C3%A7%C3%A3o" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Quero automatizar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Tempo economizado por mês</div>
+            <div class="panel-metric-big">40h+</div>
+            <div class="panel-metric-sub">horas liberadas com processos automatizados</div>
+            <div class="panel-bars" style="margin-top:24px;">
+              <div class="panel-bar" style="height:50%"></div>
+              <div class="panel-bar hi" style="height:75%"></div>
+              <div class="panel-bar hi" style="height:90%"></div>
+              <div class="panel-bar hi" style="height:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CRM -->
+        <div class="tab-panel" id="tab-crm">
+          <div class="panel-content">
+            <div class="panel-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <h3 class="panel-h3">CRM — Funil de<br>Vendas Organizado</h3>
+            <p class="panel-body">Organizo seus contatos, histórico de clientes e funil de vendas em um painel simples. Você sabe exatamente em que etapa está cada lead — sem depender de memória ou planilha.</p>
+            <div class="panel-checks">
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Visualização do funil em tempo real</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Histórico de contato por cliente</div>
+              <div class="panel-check"><div class="panel-check-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>Alertas de follow-up automático</div>
+            </div>
+            <a href="https://wa.me/5514998120592?text=Quero%20meu%20CRM" class="btn-pill-lime" target="_blank" style="margin-top:8px; width:fit-content;">Quero meu CRM <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+          <div class="panel-visual">
+            <div class="panel-visual-label">Pipeline de vendas</div>
+            <div class="crm-cols">
+              <div>
+                <div class="crm-col-title">Leads</div>
+                <div class="crm-card"><div class="crm-card-name">Barbearia Silva</div><span class="crm-card-tag tag-lead">Novo lead</span></div>
+                <div class="crm-card"><div class="crm-card-name">Auto Peças JP</div><span class="crm-card-tag tag-lead">Novo lead</span></div>
+              </div>
+              <div>
+                <div class="crm-col-title">Proposta</div>
+                <div class="crm-card"><div class="crm-card-name">Clínica Dra. Ana</div><span class="crm-card-tag tag-proposta">Em andamento</span></div>
+                <div class="crm-card"><div class="crm-card-name">Restaurante Villa</div><span class="crm-card-tag tag-proposta">Aguardando</span></div>
+              </div>
+              <div>
+                <div class="crm-col-title">Fechado</div>
+                <div class="crm-card"><div class="crm-card-name">Advocacia Lima</div><span class="crm-card-tag tag-fechado">✓ Fechado</span></div>
+                <div class="crm-card"><div class="crm-card-name">Studio Pilates</div><span class="crm-card-tag tag-fechado">✓ Fechado</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab-panels -->
+    </div>
+  </section>
+
+  <!-- SECTION 3 — COMO FUNCIONA (DARK GREEN) -->
+  <section class="section-dark" id="como-funciona">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">
+          <span class="badge">
+            <span class="badge-dot"></span>
+            Processo
+          </span>
+        </div>
+        <h2 class="section-h2 fade-up">
+          Do zero ao ar em<br><span class="serif" style="color:#F5C400;">3 passos</span>
+        </h2>
+        <p class="section-sub fade-up" style="color: var(--text-dark-muted);">Sem reuniões que não terminam. Sem surpresa no prazo. Você aprova, eu entrego.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step fade-up">
+          <div class="step-num">01</div>
+          <div>
+            <h3 class="step-h3">Diagnóstico</h3>
+            <p class="step-body">Uma conversa de 15 minutos. Entendo o negócio, o que está travando e o que faz sentido atacar primeiro.</p>
+          </div>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">02</div>
+          <div>
+            <h3 class="step-h3">Proposta em 24h</h3>
+            <p class="step-body">Escopo claro, prazo definido e preço fixo. Sem surpresa no meio do caminho.</p>
+          </div>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">03</div>
+          <div>
+            <h3 class="step-h3">Entrega & Resultados</h3>
+            <p class="step-body">Você aprova e o projeto vai ao ar. Acompanhamento semanal com números reais de retorno.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION 5 — DEPOIMENTOS (WHITE) -->
+  <section class="section" id="depoimentos">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">
+          <span class="badge">
+            <span class="badge-dot"></span>
+            Depoimentos
+          </span>
+        </div>
+        <h2 class="section-h2 fade-up">Quem já usou, <span class="serif" style="color:#F5C400;">recomenda</span></h2>
+        <p class="section-sub fade-up">Negócios que estavam perdendo cliente todo dia — e viraram referência na região.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Site novo em 5 dias. Já na primeira semana recebi 4 orçamentos pelo WhatsApp. Antes não chegava nenhum pelo site."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">R</div>
+            <div>
+              <div class="author-name">Rafael M.</div>
+              <div class="author-role">Barbearia, SP</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"O Google Meu Negócio que ele configurou fez a gente aparecer nas buscas locais. Hoje 60% dos pacientes novos vêm pelo Google."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">C</div>
+            <div>
+              <div class="author-name">Dra. Camila T.</div>
+              <div class="author-role">Clínica Odontológica, SP</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Os carrosséis ficam com cara de agência grande. Clientes novos chegam perguntando onde viram a gente. É sempre o Instagram."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">L</div>
+            <div>
+              <div class="author-name">Lucas A.</div>
+              <div class="author-role">Restaurante, Ourinhos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL (DARK GREEN) -->
+  <section class="section-dark" id="contato">
+    <div class="container">
+      <div class="cta-wrap fade-up">
+        <span class="badge" style="margin-bottom: 24px; display: inline-flex;">
+          <span class="badge-dot"></span>
+          Próximo passo
+        </span>
+        <h2 class="cta-h2">
+          Seu negócio está<br>perdendo cliente <span class="serif" style="color:#F5C400;">agora</span>
+        </h2>
+        <p class="cta-sub">Cada dia sem presença digital é receita que vai pro concorrente. Tenho proposta pronta em 24h.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/5514998120592?text=Oi%20Pedro%2C%20quero%20uma%20proposta" class="btn-pill-lime" target="_blank">
+            Falar no WhatsApp
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+              <rect width="100" height="100" rx="26" fill="rgba(255,255,255,0.08)"/>
+              <rect x="22" y="54" width="16" height="27" rx="4" fill="#F5C400" opacity="0.35"/>
+              <rect x="42" y="37" width="16" height="44" rx="4" fill="#F5C400" opacity="0.7"/>
+              <rect x="62" y="19" width="16" height="62" rx="4" fill="#F5C400"/>
+            </svg>
+            <span class="footer-logo-word">Martins OS</span>
+          </a>
+          <p class="footer-tagline">Serviços digitais diretos ao ponto. Sem agência, sem overhead. Só resultado.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>Serviços</h4>
+            <ul>
+              <li><a href="#servicos">Site & Landing Page</a></li>
+              <li><a href="#servicos">Tráfego Pago</a></li>
+              <li><a href="#servicos">Google Meu Negócio</a></li>
+              <li><a href="#servicos">Automação</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="https://wa.me/5514998120592" target="_blank">WhatsApp</a></li>
+              <li><a href="mailto:pepeuhenrique357@gmail.com">E-mail</a></li>
+              <li><a href="https://instagram.com/Martinss.os" target="_blank">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Martins OS. Pedro Martins.</span>
+        <span class="footer-tagline-right">São Paulo, Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll border
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 8);
+    });
+
+    // Services tabs — auto-rotate 15s
+    const TAB_MS = 8000;
+    const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+    const tabSection = document.getElementById('servicos');
+    let tabTimer = null;
+    let tabPaused = false;
+
+    function activateTab(btn) {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    }
+
+    function nextTab() {
+      const idx = tabBtns.findIndex(b => b.classList.contains('active'));
+      activateTab(tabBtns[(idx + 1) % tabBtns.length]);
+    }
+
+    function startRotation() {
+      clearInterval(tabTimer);
+      tabTimer = setInterval(() => { if (!tabPaused) nextTab(); }, TAB_MS);
+    }
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => { activateTab(btn); startRotation(); });
+    });
+
+    tabSection.addEventListener('mouseenter', () => { tabPaused = true; });
+    tabSection.addEventListener('mouseleave', () => { tabPaused = false; });
+
+    activateTab(tabBtns[0]);
+    startRotation();
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+    });
+    document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+      });
+    });
+
+    // Intersection Observer — fade-up animations with stagger
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const siblings = Array.from(entry.target.parentElement.querySelectorAll('.fade-up'));
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
