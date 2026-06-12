@@ -705,18 +705,9 @@
     .footer-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
       margin-bottom: 16px;
-    }
-    .footer-logo-mark {
-      width: 36px; height: 36px;
-      background: var(--lime);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
     }
     .footer-logo-word {
       font-size: 15px;
@@ -839,6 +830,7 @@
       .steps-grid::before { display: none; }
       .footer-top { flex-direction: column; }
       .footer-nav { flex-wrap: wrap; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
       .container, .nav-inner, .footer-inner {
         padding-left: 20px;
         padding-right: 20px;
@@ -848,6 +840,31 @@
       .section-dark { padding: 80px 0; }
       .cta-wrap { padding: 48px 24px; }
       .float-1, .float-2 { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-inner { padding: 0 16px; }
+      .hero { padding: 48px 0 80px; }
+      .hero-inner { gap: 36px; }
+      .hero-sub { font-size: 16px; }
+      .hero-actions { gap: 12px; }
+      .btn-pill-lime, .btn-pill-dark { padding: 12px 20px; font-size: 15px; }
+      .hero-device { padding: 20px; }
+      .device-metric-val { font-size: 24px; }
+      .tab-buttons { gap: 6px; }
+      .tab-btn { padding: 8px 14px; font-size: 13px; }
+      .tab-btn svg { width: 13px; height: 13px; }
+      .panel-h3 { font-size: 24px; }
+      .panel-body { font-size: 15px; }
+      .section-h2 { font-size: 28px; }
+      .cta-wrap { padding: 36px 16px; border-radius: 20px; }
+      .cta-h2 { font-size: 28px; }
+      .section-sm { padding: 56px 0; }
+      .footer-nav { gap: 24px; }
+      .container, .footer-inner { padding-left: 16px; padding-right: 16px; }
+      .testimonial-card { padding: 24px; }
+      .crm-cols { gap: 8px; }
+      .panel-visual { padding: 24px; }
     }
   </style>
 </head>
@@ -1397,11 +1414,11 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="#" class="footer-logo">
-            <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
-              <rect width="100" height="100" rx="26" fill="rgba(255,255,255,0.08)"/>
-              <rect x="22" y="54" width="16" height="27" rx="4" fill="#F5C400" opacity="0.35"/>
-              <rect x="42" y="37" width="16" height="44" rx="4" fill="#F5C400" opacity="0.7"/>
-              <rect x="62" y="19" width="16" height="62" rx="4" fill="#F5C400"/>
+            <svg width="36" height="36" viewBox="0 0 100 100" fill="none">
+              <rect width="100" height="100" rx="22" fill="#1A1A18"/>
+              <path d="M12,82 L12,18 L30,34 L35,34 L35,82 Z" fill="#F5C400"/>
+              <path d="M39,82 L39,18 L57,34 L62,34 L62,82 Z" fill="#F5C400"/>
+              <path d="M66,82 L66,18 L84,34 L89,34 L89,82 Z" fill="#F5C400"/>
             </svg>
             <span class="footer-logo-word">Martins OS</span>
           </a>
